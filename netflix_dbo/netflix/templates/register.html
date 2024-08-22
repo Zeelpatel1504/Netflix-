@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Netflix Registration</title>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        font-family: "Arial", sans-serif;
+        background-image: url("https://ik.imagekit.io/euo36lugk/Netflix/Netflix-Background_bZpOhTfQL.jpg?updatedAt=1711915551196");
+        background-size: cover;
+        background-position: center;
+        color: #fff; /* Light text color for contrast */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-repeat: no-repeat;
+      }
+
+      .registration-container {
+        width: 100%;
+        max-width: 400px;
+        padding: 40px;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.85
+        ); /* More transparency for the background */
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+        animation: fadeIn 1s ease-out forwards, scaleUp 0.5s ease-in-out;
+        backdrop-filter: blur(5px);
+      }
+
+      h2 {
+        text-align: center;
+        color: #e50914; /* Netflix red */
+        margin-bottom: 30px;
+        font-size: 24px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      form p {
+        margin: 10px 0;
+        color: #bbb;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="email"] {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        border: 1px solid #333;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+
+      button {
+        background-color: #e50914; /* Netflix button color */
+        color: #fff;
+        border: none;
+        padding: 15px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        border-radius: 4px;
+        font-size: 18px;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+        opacity: 0.9;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes scaleUp {
+        0% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="registration-container">
+      <!-- Netflix logo -->
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
+        alt="Netflix Logo"
+        style="width: 200px; display: block; margin: 0 auto 30px"
+      />
+      <h2>User Registration</h2>
+      <form method="post"> 
+        {%csrf_token %} {{ user_form.as_p }}
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </body>
+</html>

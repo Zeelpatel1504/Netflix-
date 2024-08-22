@@ -1,0 +1,103 @@
+{% extends 'navbar.html' %} {% block content %}
+<style>
+  .media-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .media-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    width: 1200px;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+
+  }
+
+  .media-card {
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .media-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .media-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .media-card-content {
+    padding: 15px;
+  }
+
+  .media-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+
+  .media-card a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .media-card a:hover {
+    color: #ff9800;
+  }
+
+  .back-button {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .back-button a button {
+    padding: 10px 20px;
+    background-color: #ff9800;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .back-button a button:hover {
+    background-color: #f57c00;
+  }
+</style>
+
+<div class="media-container">
+  <div class="media-list-container">
+    {% for media in media_list %}
+    <div class="media-card">
+      <img src="{{ media.image_path }}" alt="{{ media.MName }}" />
+      <div class="media-card-content">
+        <h3>{{ media.MName }}</h3>
+        <a
+          href="{% url 'media_details' profile_id=profile_id media_id=media.pk %}"
+          >View Details</a
+        >
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="back-button">
+    <a href="{% url 'browse_by_genres' profile_id=profile_id %}"
+      ><button>Back</button></a
+    >
+  </div>
+  {% endblock %} 
+</div>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Profile List</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        background-color: #141414;
+        color: #fff;
+        text-align: center;
+      }
+
+      .top-right {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      h2 {
+        color: #e50914; /* Netflix red */
+        margin: 50px 0;
+        font-size: 32px;
+      }
+
+      .profiles-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+        margin: 0 auto;
+        max-width: 960px; /* Control the maximum width of the profile list */
+      }
+
+      .profile {
+        background-color: #181818;
+        border-radius: 10px;
+        margin: 15px;
+        width: 120px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+      }
+
+      .profile img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 3px solid #333;
+        object-fit: cover;
+      }
+
+      .profile-name {
+        color: #fff;
+        font-size: 16px;
+        margin-top: 8px;
+        margin-bottom: 12px;
+      }
+
+      .profile button {
+        background-color: #e50914;
+        border: none;
+        border-radius: 20px;
+        padding: 5px 10px;
+        color: white;
+        cursor: pointer;
+        font-size: 12px;
+        width: 80%;
+        margin: 10px auto;
+        display: block;
+      }
+
+      .add-profile-button {
+        background-color: #333;
+        color: #999;
+        border: 1px solid #999;
+        border-radius: 20px;
+        padding: 10px 15px; /* Slightly reduced padding */
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        width: 120px; /* Reduced width for a smaller button */
+        height: 20px;
+        margin: 20px auto 10px; /* Increased bottom margin for better positioning */
+        transition: all 0.2s ease-in-out;
+      }
+
+      .add-profile-button:hover {
+        background-color: #e50914;
+        color: #fff;
+        border-color: #e50914;
+      }
+
+      .logout-button {
+        background-color: #e50914;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.2s;
+      }
+
+      .logout-button:hover {
+        background-color: #f40612;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-right">
+      <a href="{% url 'logout' %}"
+        ><button class="logout-button">Logout</button></a
+      >
+    </div>
+    <h2>Who's Watching?</h2>
+    <div class="profiles-list">
+      {% for profile in profiles %}
+      <div class="profile">
+        <a
+          href="{% url 'profile_media' profile_id=profile.PID %}"
+          style="text-decoration: none; color: inherit; display: block"
+        >
+          <img
+            src="https://picsum.photos/seed/{{profile.PID}}/100/100"
+            alt="{{ profile.PName }}"
+            class="profile-image"
+          />
+          <div class="profile-name">{{ profile.PName }}</div>
+        </a>
+        <button
+          onclick="window.location.href='{% url 'edit_profile' profile_id=profile.PID %}'"
+        >
+          Edit
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+    {% if profiles|length < 5 %}
+    <div
+      class="add-profile-button"
+      onclick="window.location.href='{% url 'create_profile' %}'"
+    >
+      + Add Profile
+    </div>
+    {% endif %}
+  </body>
+</html>

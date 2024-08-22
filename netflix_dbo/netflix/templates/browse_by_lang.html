@@ -1,0 +1,127 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Language Browse{% endblock %}
+
+{% block content %}
+<style>
+    .filter-container {
+        color: #fff;
+        margin: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .filter-container select {
+        padding: 10px;
+        background-color: #333;
+        border: none;
+        color: white;
+        border-radius: 4px;
+    }
+
+    .filter-container label {
+        margin: 0;
+    }
+
+    #media-list {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 0;
+        margin: 20px;
+    }
+
+    .media-card {
+        background-color: #333;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .media-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .media-card img {
+        width: 100%;
+        display: block;
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .media-card .content {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .media-card .title {
+        font-size: 1rem;
+        font-weight: bold;
+        margin: 0;
+        color: #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .media-card .rating {
+        font-size: 0.875rem;
+        color: #999;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="filter-container">
+    <label for="language">Select Your Preference:</label>
+    <select name="language" id="language">
+        {% for lang in languages %}
+            <option value="{{ lang.LID }}" {% if lang.LID == selected_language %} selected {% endif %}>{{ lang.LName }}</option>
+        {% endfor %}
+    </select>
+    
+    <!-- Sorting Dropdown -->
+    <label for="sort-by">Sort by:</label>
+    <select name="sort-by" id="sort-by">
+        <option value="-Rating">Rating</option>
+        <option value="Released_on">Year Released</option>
+        <option value="MName">A-Z</option>
+        <option value="-MName">Z-A</option>
+    </select>
+</div>
+
+<div id="media-list">
+    <!-- Media items will be displayed here -->
+    {% for lm in language_media %}
+        <div class="media-card">
+            <img src="{{ lm.image_path }}" alt="{{ lm.MName }}" class="media-image">
+            <div class="content">
+                <a href="{% url 'media_details' profile_id=profile_id media_id=lm.pk %}" class="title">{{ lm.MName }}</a>
+                <div class="rating">Rating: {{ lm.Rating }}</div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#language, #sort-by').change(function() {
+            var languageId = $('#language').val();
+            var sortBy = $('#sort-by').val();
+            var baseUrl = "{% url 'browse_by_lang' profile_id=profile_id %}";
+            var url = `${baseUrl}?language=${languageId}&sort_by=${sortBy}`;
+            
+            $.get(url, function(data) {
+               $('#media-list').html($(data).find('#media-list').html()); // Update only the content block
+            });
+        });
+    });
+</script>
+{% endblock %}
+

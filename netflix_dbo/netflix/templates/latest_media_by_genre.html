@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Media by Genre</title>
+    <!-- Bootstrap CSS for simple styling -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #141414; 
+            color: #ffffff; 
+        }
+
+        .container {
+            margin-top: 50px; 
+        }
+
+        .table {
+            background-color: #181818; 
+            border: 1px solid #333;
+        }
+
+        .table th, .table td {
+            border-color: #444;
+            color: #E6E6E6;
+        }
+
+        .table thead th {
+            background-color: #E50914;
+            color: #ffffff; 
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background-color: #282828; 
+            color: #E6E6E6;
+        }
+
+        h2 {
+            color: #E50914; 
+        }
+        
+        .table tbody tr:hover {
+            background-color: #424242; 
+        }
+        .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px; /* Adjust margin as needed */
+    margin-top: 10px; /* Adjust margin as needed */
+
+}
+
+h2 {
+    color: #E50914;
+    margin-right: auto; /* Pushes the h2 to the left */
+}
+
+.container button {
+    margin-top: 20px;
+    background-color: red;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container button:hover {
+    background-color: #f57c00;
+}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2>Latest Media by Genre</h2>
+        <a href="{% url 'statistics_dashboard' profile_id=profile_id %}"><button>Back</button></a>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Genre Name</th>
+                <th>Latest Media Release Date</th>
+                <th>Media Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for genre in genres %}
+            <tr>
+                <td>{{ genre.GName }}</td>
+                <td>{{ genre.latest_media_date|date:"Y-m-d" }}</td>
+                <td>{{ genre.latest_media_name }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No latest media found for any genres.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

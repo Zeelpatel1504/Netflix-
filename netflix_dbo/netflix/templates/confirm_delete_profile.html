@@ -1,0 +1,76 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Delete Profile Confirmation</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #141414; /* Netflix's dark background */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h2 {
+            color: #e50914; /* Netflix red for warning actions */
+            margin-bottom: 20px; /* Space below the heading */
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #E50914; /* Netflix red for the delete button */
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            display: inline-block; /* Allows for margin */
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #f40612; /* Darker shade on hover */
+        }
+
+        a {
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            background-color: #333; /* Subdued background for cancel action */
+            transition: background-color 0.2s;
+            display: inline-block; /* Align with button */
+            margin: 5px;
+        }
+
+        a:hover {
+            background-color: #555; /* Lighten the background on hover */
+        }
+    </style>
+</head>
+<body>
+    <h2>Are you sure you want to delete the profile "{{ profile.PName }}"?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+    </form>
+
+    <a href="{% url 'profile_list' %}">Cancel</a>
+</body>
+</html>

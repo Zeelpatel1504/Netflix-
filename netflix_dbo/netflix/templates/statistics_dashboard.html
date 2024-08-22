@@ -1,0 +1,55 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Dashboard</title>
+    <!-- Bootstrap CSS for responsive and styled components -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif; /* Close to Netflix's font */
+            background-color: #141414; /* Netflix's dark background */
+            color: #fff; /* Bright text for high contrast */
+        }
+
+        .container {
+            margin-top: 50px; /* More space on top */
+        }
+
+        h1 {
+            color: #E50914; /* Netflix red for the main heading */
+        }
+
+        .list-group-item {
+            background-color: #181818; /* Dark background for each item */
+            border-color: #333; /* Slightly lighter border for subtle contrast */
+            color: #fff; /* White text */
+        }
+
+        .list-group-item:hover, .list-group-item:focus {
+            background-color: #E50914; /* Netflix red on hover/focus */
+            color: #000; /* Black text for readability */
+        }
+        
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Statistics Dashboard</h1> 
+        <p>Select an option to view detailed statistics:</p>
+        <div class="list-group mt-3">
+            <a href="{% url 'genre_stats' profile_id=profile_id %}" class="list-group-item list-group-item-action">Best Ratings</a>
+            <a href="{% url 'latest_media_by_genre' profile_id=profile_id %}" class="list-group-item list-group-item-action">Whats New?</a>
+            <a href="{% url 'ranked_media' profile_id=profile_id %}" class="list-group-item list-group-item-action">Top Ranked Media by Genre</a>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

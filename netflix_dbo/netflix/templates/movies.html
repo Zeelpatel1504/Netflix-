@@ -1,0 +1,124 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        h3 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .media-card {
+            background-color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .media-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        .media-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px 8px 0 0;
+        }
+        .media-info {
+            padding: 20px;
+        }
+        .media-info a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        .media-info a:hover {
+            color: #e50914;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Display top rated movies -->
+        <h3>Top Rated Movies</h3>
+        <ul class="media-grid">
+            {% for top in top_rated_movies %}
+            <li class="media-card">
+                <img src="{{ top.image_path }}" alt="{{ top.MName }}" class="media-image">
+                <div class="media-info">
+                    <a href="{% url 'media_details' profile_id=profile_id media_id=top.pk %}">{{ top.MName }}</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Display recently released movies -->
+        <h3>Recently Released Movies</h3>
+        <ul class="media-grid">
+            {% for recent in recent_movies %}
+            <li class="media-card">
+                <img src="{{ recent.image_path }}" alt="{{ recent.MName }}" class="media-image">
+                <div class="media-info">
+                    <a href="{% url 'media_details' profile_id=profile_id media_id=recent.pk %}">{{ recent.MName }}</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Display action movies -->
+        <h3>Action and Adventure Movies</h3>
+        <ul class="media-grid">
+            {% for action in action_adventure_shows %}
+            <li class="media-card">
+                <img src="{{ action.image_path }}" alt="{{ action.MName }}" class="media-image">
+                <div class="media-info">
+                    <a href="{% url 'media_details' profile_id=profile_id media_id=action.pk %}">{{ action.MName }}</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Optional: Display watchlist media if available -->
+        {% if watchlist_media %}
+        <h3>Watchlist Media</h3>
+        <ul class="media-grid">
+            {% for media in watchlist_media %}
+            <li class="media-card">
+                <div class="media-info">
+                    <a href="{% url 'media_details' profile_id=profile_id media_id=media.pk %}">{{ media.MName }}</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
+{% endblock %}
+
+
+

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Operations (Intersection)</title>
+    <!-- Bootstrap CSS for responsive and modern components -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #141414;
+            color: #fff; 
+        }
+
+        .container {
+            margin-top: 50px; 
+        }
+
+        h1 {
+            color: #E50914; 
+        }
+
+        .table {
+            border-collapse: collapse; 
+            width: 100%; 
+        }
+
+        .table th, .table td {
+            border: 1px solid #333;
+            padding: 12px; 
+            color: #E6E6E6;
+        }
+
+        .table thead th {
+            background-color: #E50914; 
+            color: #E6E6E6;
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background-color: #2C2C2C;
+        }
+
+        .table tbody tr:hover {
+            background-color: #424242;
+        }
+        .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px; /* Adjust margin as needed */
+    margin-top: 10px; /* Adjust margin as needed */
+
+}
+
+h2 {
+    color: #E50914;
+    margin-right: auto; /* Pushes the h2 to the left */
+}
+
+.container button {
+    margin-top: 20px;
+    background-color: red;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container button:hover {
+    background-color: #f57c00;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Set Operations - Intersection</h1>
+            <p>Media that is common between genres <b>Action</b> and <b>Adventure</b>.</p>
+
+            <a href="{% url 'statistics_dashboard' profile_id=profile_id %}"><button>Back</button></a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Media Name</th>
+                    <th>Rating</th>
+                    <th>Released On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for media in media %}
+                <tr>
+                    <td>{{ media.MName }}</td>
+                    <td>{{ media.Rating }}</td>
+                    <td>{{ media.Released_on|date:"Y-m-d" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No media found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+
+{% extends 'navbar.html' %}
+
+{% block title %}Profile Media{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Media</title>
+    <style>
+        /* Style for card layout */
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+
+            
+        }
+
+        .card {
+            background-color: #333333;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 200px;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+        
+        }
+
+        .card-rating {
+            color: #999;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Display top movies -->
+    <h3>Top Movies</h3>
+    <div class="card-container">
+        {% for movie in top_movies %}
+        <div class="card">
+            <a href="{% url 'media_details' profile_id=profile_id media_id=movie.pk %}">
+                <img src="{{ movie.image_url }}" alt="{{ movie.MName }}">
+            </a>
+            <div class="card-content">
+                <a href="{% url 'media_details' profile_id=profile_id media_id=movie.pk %}" class="card-title">{{ movie.MName }}</a>
+                <div class="card-rating">Rating: {{ movie.Rating }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Display top seasons -->
+    <h3>Top Seasons</h3>
+    <div class="card-container">
+        {% for season in top_seasons %}
+        <div class="card">
+            <a href="{% url 'media_details' profile_id=profile_id media_id=season.pk %}">
+                <img src="{{ season.image_url }}" alt="{{ season.MName }}">
+            </a>
+            <div class="card-content">
+                <a href="{% url 'media_details' profile_id=profile_id media_id=season.pk %}" class="card-title">{{ season.MName }}</a>
+                <div class="card-rating">Rating: {{ season.Rating }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Display watchlist media if available -->
+    {% if watchlist_media %}
+    <h3>Watchlist Media</h3>
+    <div class="card-container">
+        {% for media in watchlist_media %}
+        <div class="card">
+            <a href="{% url 'media_details' profile_id=profile_id media_id=media.pk %}">
+                <img src="{{ media.image_url }}" alt="{{ media.MName }}">
+            </a>
+            <div class="card-content">
+                <a href="{% url 'media_details' profile_id=profile_id media_id=media.pk %}" class="card-title">{{ media.MName }}</a>
+                <div class="card-rating">Rating: {{ media.Rating }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Display top rated media by genre -->
+    <h3>Top Rated Media By Genre</h3>
+    <div class="card-container">
+        {% for media in ranked_media %}
+        <div class="card">
+            <a href="{% url 'media_details' profile_id=profile_id media_id=media.MID %}">
+                <img src="{{ media.image_url }}" alt="{{ media.MName }}">
+            </a>
+            <div class="card-content">
+                <div class="card-genre">{{ media.mediagenre__GID__GName }}</div>
+                <a href="{% url 'media_details' profile_id=profile_id media_id=media.MID %}" class="card-title">{{ media.MName }}</a>
+                <div class="card-rating">Rating: {{ media.Rating }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Media Details</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #141414;
+            color: #fff;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        h2, h3 {
+            color: #E50914;
+        }
+
+        p, li {
+            color: #fff;
+            padding: 5px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        button {
+            background-color: #E50914; 
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #f40612;
+        }
+
+        a {
+            color: #ccc;
+            text-decoration: none;
+            padding: 10px;
+            display: inline-block;
+        }
+
+        a:hover {
+            text-decoration: underline; 
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        select {
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            margin: 10px;
+        }
+
+        label {
+            color: #999;
+            font-size: 1.2rem;
+            display: block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>{{ media.MName }}</h2>
+    <p>Plot: {{ media.Plot }}</p>
+    <p>Released on: {{ media.Released_on }}</p>
+    <p>Rating: {{ media.Rating }}</p>
+    <p>Duration: {{ media.Duration }} minutes</p>
+    <p>Year: {{ media.Year }}</p>
+    <p>Genres:
+        {% for genre in genres %}
+            {{ genre.GName }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+
+    <!-- Season Dropdown -->
+    {% if media.MTID == 2 %}
+    <!-- Season Dropdown -->
+    <label for="season">Season:</label>
+    <select name="season" id="season">
+        {% for season in seasons %}
+            <option value="{{ season.SID }}" {% if season == default_season %} selected {% endif %}>{{ season.SName }}</option>
+        {% endfor %}
+    </select>
+
+    <h3>Episodes:</h3>
+    <ul id="episodes-list">
+        {% for episode in episodes %}
+            <li><strong>{{ episode.EName }}</strong>: {{ episode.Plot }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+   
+
+    <!-- Episodes List -->
+   
+
+    <!-- Watchlist Management -->
+    {% if is_in_watchlist %}
+        <form action="{% url 'remove_from_watchlist' profile_id=profile_id media_id=media.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Remove from Watchlist</button>
+        </form>
+    {% else %}
+        <form action="{% url 'add_to_watchlist' profile_id=profile_id media_id=media.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Add to Watchlist</button>
+        </form>
+    {% endif %}
+
+    <a href="{% url 'profile_media' profile_id=profile_id %}"><button>Back</button></a>
+
+    <script>
+        $(document).ready(function() {
+            $('#season').change(function() {
+                var seasonId = $(this).val();
+                var url = "{% url 'get_episodes' %}?season_id=" + seasonId;
+                $.get(url, function(data) {
+                    $('#episodes-list').empty();
+                    data.episodes.forEach(function(episode) {
+                        $('#episodes-list').append('<li><strong>' + episode.EName + '</strong>: ' + episode.Plot + '</li>');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genre Statistics</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #141414; 
+            color: #ffffff;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+        }
+       
+        .table {
+            border-collapse: collapse;
+            width: 100%; 
+        }
+        .table thead th {
+            background-color: #E50914; 
+            color: #ffffff;
+            padding: 12px; 
+        }
+        .table td, .table th {
+            border: 1px solid #555; 
+            padding: 10px;
+            color: #E6E6E6; 
+        }
+        .table tbody tr:nth-child(odd) {
+            background-color: #2C2C2C; 
+        }
+       
+
+        .table tbody tr:hover {
+            background-color: #424242;
+        }
+        .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px; /* Adjust margin as needed */
+    margin-top: 10px; /* Adjust margin as needed */
+
+}
+
+h2 {
+    color: #E50914;
+    margin-right: auto; /* Pushes the h2 to the left */
+}
+
+.container button {
+    margin-top: 20px;
+    background-color: red;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container button:hover {
+    background-color: #f57c00;
+}
+
+    </style>
+</head>
+<body>
+<div class="container">
+  
+    <div class="header">
+        <h2>Genre Statistics</h2>
+        <a href="{% url 'statistics_dashboard' profile_id=profile_id %}"><button>Back</button></a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Genre Name</th>
+                <th>Average Rating</th>
+                <th>Media Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for genre in genre_stats %}
+            <tr>
+                <td>{{ genre.GName }}</td>
+                <td>{{ genre.avg_rating|floatformat:2|default:"N/A" }}</td>
+                <td>{{ genre.media_count }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No genres found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
