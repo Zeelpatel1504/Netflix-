@@ -34,7 +34,7 @@
 
   <h3>Installation</h3>
   <ol>
-    <li>Clone the repository: `git clone https://github.com/Zeelpatel1504/Netflix-Project`</li>
+    <li>Clone the repository: `git clone https://github.com/Zeelpatel1504/Netflix-Project </li>
     <li>Set up a virtual environment: `python -m venv env`</li>
     <li>Activate the virtual environment: `source env/bin/activate` (Windows: `env\Scripts\activate`)</li>
     <li>Install dependencies: `pip install -r requirements.txt`</li>
