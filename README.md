@@ -4,7 +4,10 @@
 <body>
   <h1>Netflix README</h1>
   <h2>Project Overview</h2>
-  <p>A web application that provides a Netflix-like experience, allowing users to create profiles, browse and watch content, rate and review movies/series, and personalize their recommendations.</p>
+  <p>A web application that provides a Netflix-like experience, allowing users to create profiles, browse and watch content, rate and review movies/series, and personalize their recommendations.
+Watch Demo on https://drive.google.com/file/d/1fVsUVPM40a_EdFOJi684RSLjYpRgi9_8/view?usp=sharing </p>
+
+
 
   <h2>Key Features</h2>
   <ul>
